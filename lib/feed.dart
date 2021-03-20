@@ -8,7 +8,9 @@ class FeedScreen extends StatefulWidget {
 }
 
 // initialise the variables I want to assign to elements to display on page
+String leading = '';
 String title = '';
+String subtitle = '';
 String description = '';
 
 class _FeedScreenState extends State<FeedScreen> {
@@ -17,7 +19,9 @@ class _FeedScreenState extends State<FeedScreen> {
     try {
       var data = await News().getNewsData();
       setState(() {
-        title = data[0]['description'];
+        title = data[0]['title'];
+        leading = data[0]['urlToImage'];
+        subtitle = data[0]['description'];
       });
     } catch (e) {
       print(e);
@@ -40,11 +44,32 @@ class _FeedScreenState extends State<FeedScreen> {
         title: Text('AppBar'),
       ),
       body: Center(
-        child: Text(
-          title,
-          style: TextStyle(
-            color: Colors.black,
-          ),
+        child: ListView.builder(
+          itemCount: 5,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    // leading: Image.network(leading),
+                    // ),
+                    title: Text(title),
+                    subtitle: Text(subtitle),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      TextButton(
+                        child: const Text('READ MORE'),
+                        onPressed: () {/* ... */},
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
