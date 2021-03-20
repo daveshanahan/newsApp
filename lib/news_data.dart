@@ -13,8 +13,8 @@ class News {
       String data = response.body;
       var decodedData = jsonDecode(data);
       var articles = decodedData['articles'];
-      var title = decodedData['articles'][0]['title'];
-      return title;
+      // var title = decodedData['articles'][0]['title'];
+      return articles;
     } else {
       print(response.statusCode);
       throw 'problem with GET request';
